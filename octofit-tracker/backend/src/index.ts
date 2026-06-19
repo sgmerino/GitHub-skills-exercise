@@ -5,13 +5,9 @@ import activitiesRouter from "./routes/activities.ts";
 import leaderboardRouter from "./routes/leaderboard.ts";
 import workoutsRouter from "./routes/workouts.ts";
 import { connectDatabase } from "./config/database.ts";
+import { startServer } from "./server.ts";
 
 const app = express();
-const port = 8000;
-const codespace = process.env.CODESPACE_NAME;
-const apiUrl = codespace
-  ? `https://${codespace}-${port}.app.github.dev`
-  : `http://localhost:${port}`;
 
 app.use(express.json());
 
@@ -27,9 +23,7 @@ app.use("/api/workouts", workoutsRouter);
 
 connectDatabase()
   .then(() => {
-    app.listen(port, () => {
-      console.log(`Server listening on ${apiUrl}`);
-    });
+    startServer(app);
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);
