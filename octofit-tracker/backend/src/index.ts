@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import usersRouter from "./routes/users.ts";
 import teamsRouter from "./routes/teams.ts";
@@ -9,6 +10,7 @@ import { startServer } from "./server.ts";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
